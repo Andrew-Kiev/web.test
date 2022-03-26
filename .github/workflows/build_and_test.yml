@@ -5,7 +5,7 @@ on: pull_request
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
@@ -26,4 +26,14 @@ jobs:
         run: dotnet build WebSite.sln --configuration Release --no-restore
         
       - name: WebSite - Launch
-        run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &
+        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe
+        
+      - name: Tests - restore dependencies
+        run: dotnet restore AutWebTest/AutWebTest.sln
+
+      - name: Tests - Build
+        run: dotnet build AutWebTest/AutWebTest.sln --configuration Release --no-restore
+        
+      - name: Tests - Run
+        run: dotnet test AutWebTest/AutWebTest.sln --configuration Release --no-restore --verbosity Minimal
+        

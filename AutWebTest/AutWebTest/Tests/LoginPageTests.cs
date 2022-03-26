@@ -1,5 +1,5 @@
-using AutWebTest.Pages;
 using AutWebTest.Helpers;
+using AutWebTest.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -14,8 +14,12 @@ namespace AutWebTest.Tests
         [SetUp]
         public void Setup()
         {
-            driver = new ChromeDriver();
-            driver.Url = "http://localhost:5000/";
+            var options = new ChromeOptions { AcceptInsecureCertificates = true };  // needed to open HTTPS pages without certificate
+            options.AddArgument("log-level=3");                                     // only log errors in github pipelines
+            options.AddArgument("--silent");                                        // less info messages in github pipelines
+
+            driver = new ChromeDriver(options);
+            driver.Url = "https://localhost:5001/";
             loginPage = new LoginPage(driver);
         }
 
@@ -69,7 +73,7 @@ namespace AutWebTest.Tests
         public void LoginWithValidCredentials()
         {
             loginPage.Login("test", "newyork1");
-            Assert.AreEqual("http://localhost:5000/Calculator", driver.Url);
+            Assert.AreEqual("https://localhost:5001/Calculator", driver.Url);
         }
     }
 }
