@@ -1,5 +1,6 @@
 using AutWebTest.Helpers;
 using AutWebTest.Pages;
+using NUnit.Core;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -26,49 +27,18 @@ namespace AutWebTest.Tests
         [TearDown]
         public void TearDown() => driver.Dispose();
 
-        [Test]
-        public void LoginWithEmptyField()
+        [TestCase("", "", "User not found!", TestName = "Login With Empty Creds")]
+        [TestCase("", "Somestring", "User not found!", TestName = "Login With Empty Name")]
+        [TestCase("Some*$#^$$*_+", "", "User not found!", TestName = "Login With Empty Password")]
+        [TestCase("Some login", "Some string!1234", "User not found!", TestName = "Login With Invalid Credentials")]
+        [TestCase("Somelogin", "newyork1", "Incorrect user name!", TestName = "Login With Invalid Name")]
+        [TestCase("test", "Somestring!1234", "Incorrect password!", TestName = "Login With Invalid Password")]
+        public void InvalidOrEmptyCreds(string login, string password, string expectedError)
         {
-            loginPage.Login(string.Empty, string.Empty);
-            Assert.AreEqual("User not found!", loginPage.ErrorMessage);
+            loginPage.Login(login, password);
+            Assert.AreEqual(expectedError, loginPage.ErrorMessage);
         }
-
-        [Test]
-        public void LoginWithEmptyName()
-        {
-
-            loginPage.Login(Helper.RandomString(10), string.Empty);
-            Assert.AreEqual("User not found!", loginPage.ErrorMessage);
-        }
-
-        [Test]
-        public void LoginWithEmptyPass()
-        {
-            loginPage.Login(string.Empty, Helper.RandomString(10));
-            Assert.AreEqual("User not found!", loginPage.ErrorMessage);
-        }
-
-        [Test]
-        public void LoginWithInvalidCredentials()
-        {
-            loginPage.Login(Helper.RandomString(10), Helper.RandomString(10));
-            Assert.AreEqual("User not found!", loginPage.ErrorMessage);
-        }
-
-        [Test]
-        public void LoginWithInvalidName()
-        {
-            loginPage.Login(Helper.RandomString(10), "newyork1");
-            Assert.AreEqual("Incorrect user name!", loginPage.ErrorMessage);
-        }
-
-        [Test]
-        public void LoginWithInvalidPass()
-        {
-            loginPage.Login("test", Helper.RandomString(10));
-            Assert.AreEqual("Incorrect password!", loginPage.ErrorMessage);
-        }
-
+        
         [Test]
         public void LoginWithValidCredentials()
         {

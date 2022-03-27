@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using System;
 
 namespace AutWebTest.Pages
 {
@@ -25,13 +27,12 @@ namespace AutWebTest.Pages
 
         public void Login(string login, string password)
         {
-            //if (LoginField.GetProperty. != string.Empty)
-            //    LoginField.Clear();
-            //if (PasswordField.GetProperty. != string.Empty)
-            //    PasswordField.Clear();
+            string loginPageURL = driver.Url;
             LoginField.SendKeys(login);
             PasswordField.SendKeys(password);
             LoginButton.Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(2))
+            .Until(_ => driver.Url != loginPageURL || ErrorMessage != string.Empty);
         }
     }
 }
