@@ -25,11 +25,11 @@ namespace AutWebTest.Tests
         [TearDown]
         public void TearDown() => driver.Dispose();
 
-        [TestCase("", "", "Login/Password cannot be enpty!", TestName = "Login With Empty Creds")]
-        [TestCase("", "Somestring", "Login/Password cannot be enpty!", TestName = "Login With Empty Name and wrong password")]
-        [TestCase("", "newyork1", "Login/Password cannot be enpty!", TestName = "Login With Empty Name and correct password")]
-        [TestCase("Some*$#^$$*_+", "", "Login/Password cannot be enpty!", TestName = "Login With Empty Password and wrong login")]
-        [TestCase("test", "", "Login/Password cannot be enpty!", TestName = "Login With Empty Password and correctlogin")]
+        [TestCase("", "", "Login/Password cannot be empty!", TestName = "Login With Empty Creds")]
+        [TestCase("", "Somestring", "Login/Password cannot be empty!", TestName = "Login With Empty Name and wrong password")]
+        [TestCase("", "newyork1", "Login/Password cannot be empty!", TestName = "Login With Empty Name and correct password")]
+        [TestCase("Some*$#^$$*_+", "", "Login/Password cannot be empty!", TestName = "Login With Empty Password and wrong login")]
+        [TestCase("test", "", "Login/Password cannot be empty!", TestName = "Login With Empty Password and correctlogin")]
         [TestCase("Some login", "Some string!1234", "Incorrect Login/Password!", TestName = "Login With Invalid Credentials")]
         [TestCase("Somelogin", "newyork1", "Incorrect Login/Password!", TestName = "Login With Invalid Name")]
         [TestCase("test", "Somestring!1234", "Incorrect Login/Password!", TestName = "Login With Invalid Password")]
