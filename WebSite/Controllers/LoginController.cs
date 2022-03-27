@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
 
@@ -34,24 +33,12 @@ namespace WebSite.Controllers
                 return Ok();
             }
 
-            // *********************************************
-            if (Users.Names.Any(x => x.ToLower() == dto.Login.ToLower()))
+            if (string.IsNullOrEmpty(dto.Login) || string.IsNullOrEmpty(dto.Password))
             {
-                return NotFound("Incorrect password!");
+                return BadRequest("Login/Password cannot be empty!");
             }
 
-            if (Users.Passwords.Any(x => x == dto.Password))
-            {
-                return NotFound("Incorrect user name!");
-            }
-
-            if (Users.Names.All(x => x.ToLower() != dto.Login.ToLower()))
-            {
-                return NotFound("User not found!");
-            }
-            // *********************************************
-
-            return NotFound("Incorrect user name or password!");
+            return BadRequest("Incorrect Login/Password!");
         }
     }
 }
