@@ -1,6 +1,4 @@
-using AutWebTest.Helpers;
 using AutWebTest.Pages;
-using NUnit.Core;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -38,7 +36,7 @@ namespace AutWebTest.Tests
             loginPage.Login(login, password);
             Assert.AreEqual(expectedError, loginPage.ErrorMessage);
         }
-        
+
         [Test]
         public void LoginWithValidCredentials()
         {
