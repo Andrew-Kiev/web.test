@@ -3,4 +3,6 @@
 */obj/*
 */bin/*
 packages/*
-
+AutWebTest/AutWebTest/bin/*
+AutWebTest/AutWebTest/obj/*
+AutWebTest/.vs/*
